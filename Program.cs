@@ -9,7 +9,7 @@ namespace TreasureHunter
         {
             Console.Clear();
             Player player = new Player("Michael");
-            Boundary boundary = new Boundary("Main", "You're in the Main Cavern.  It's dark, cold, and smells like sweaty gym socks!  You look around and notice that you can go in several different directions.  Collect items in the surrounding caves, and come back to this location to climb out of this cave.  Be careful!!");
+            Boundary boundary = new Boundary("Main", "You're in the Main Cavern.  It's dark, cold, and smells like sweaty gym socks!  You look around and notice that you can go in several different directions.  Collect items in the surrounding caves, and come back to this location to climb out of this cave.  Remember to check out your backpack.  Be careful!!");
             App app = new App();
             app.Player = player;
             app.Location = boundary;

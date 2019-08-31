@@ -19,6 +19,6 @@ namespace TreasureHunter.Interfaces
         void DisplayHelpInfo(); //NOTE the logic to run when the user enters 'help'
 
         //NOTE [STRETCH GOALS] - Basic requirements first and then extend your application.
-        // void UseItem(string itemName); //NOTE [STRETCH GOAL] - to use an item you must check that your player has the target item in their Inventory and then if so modify the value of a property on the Location. You may keep or remove the item from the player's inventory according to what makes the most sense with your story.
+        void UseItem(string itemName); //NOTE [STRETCH GOAL] - to use an item you must check that your player has the target item in their Inventory and then if so modify the value of a property on the Location. You may keep or remove the item from the player's inventory according to what makes the most sense with your story.
     }
 }

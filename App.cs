@@ -64,10 +64,16 @@ namespace Models.TreasureHunter
 
                         break;
 
+                    case "use":
+
+                        UseItem(option);
+
+                        break;
+
                     case "quit":
 
                         Console.Clear();
-                        Console.WriteLine("Are you sure want to quit?\nPress Y(es) or N(o)");
+                        Console.Write("Are you sure want to quit?\nPress Y(es) or N(o)");
                         string quitResponse = Console.ReadLine().ToLower();
                         if (quitResponse == "y")
                         {
@@ -110,8 +116,7 @@ you bash your head on a low rock ceiling.  You stumble around in a daze and take
             else
             {
                 Console.WriteLine("You can't go that way! You can only pass through the main cavern!!\n");
-                Console.WriteLine("Press Enter to continue");
-                Console.ReadLine();
+                Console.Write("Press Enter to continue");
             }
             Console.ReadLine();
         }
@@ -142,6 +147,7 @@ IMPORTANT NOTE - This is a good thing to check from time to time as you may find
             Console.WriteLine("GAME MENU\n\n");
             Console.WriteLine("GO + Location -> moves you to a new location (e.g GO WEST)\n");
             Console.WriteLine("TAKE + Item -> picks up an item and adds it to your backpack (e.g. TAKE Rope)\n");
+            Console.WriteLine("USE + Item -> takes an item from your backpack (e.g. Use Rope\n");
             Console.WriteLine("LOOK -> shows the description of the current cave that you're in\n");
             Console.WriteLine("PEEK -> shows the contents of your backpack\n");
             Console.WriteLine("HELP -> displays help information.  Type this command at anytime for assistance\n");
@@ -211,33 +217,44 @@ you need, return to the main cavern to start your accent!!  WARNING...there may 
 
         public void Setup()
         {
-            Boundary north = new Boundary("North", "\nYou enter a large cave with hundreads of stalactites hanging from the ceiling.  As you work your way through the maze you notice, out of the corner of your eye, a HOOK imbedded into the cavern wall.");
+            Boundary north = new Boundary("North", "\nYou enter a large cave with hundreads of stalactites hanging from the ceiling.  Watch your head as you roam around this cave, and be careful not to step in anything!!");
             Boundary south = new Boundary("South", " ");
             Boundary east = new Boundary("East", "\nThis cave is full of stalagmites.  Probably not the safest place to be.  You don't want to fall on any of those...they look awfully sharp!  Get out of this cave while you can!");
             Boundary west = new Boundary("West", "\nWatch your head!  This cave has a low ceiling and is being supported by old dried out timbers on the side of the cave.  However, they look to be pretty secure from the ROPE that's holding them together.");
 
-            Item hook = new Item("Hook", "Hook for climbing");
-            Item rope = new Item("Rope", "Rope for climbing");
-            Item flashlight = new Item("Flashlight", "Used for light");
-            Item compass = new Item("Compass", "Used for direction");
-            Item sandwich = new Item("Sandwich", "For nourishment");
+            //Item hook = new Item("hook", "Hook for climbing");
+            Item rope = new Item("rope", "Rope for climbing");
+            Item flashlight = new Item("flashlight", "Used for light");
+            Item compass = new Item("compass", "Used for direction");
+            //Item sandwich = new Item("sandwich", "For nourishment");
 
 
-            north.Items.Add(hook);
             west.Items.Add(rope);
+            west.Items.Add(flashlight);
+            west.Items.Add(compass);
+
+            Location.Items.Add(rope);
+            Location.Items.Add(flashlight);
+            Location.Items.Add(compass);
+
+            north.Items.Add(flashlight);
+            north.Items.Add(compass);
+
+            east.Items.Add(flashlight);
+            east.Items.Add(compass);
+
 
             Location.NeighborBoundaries.Add(north.Name, north);
             north.NeighborBoundaries.Add(Location.Name, Location);
             Location.NeighborBoundaries.Add(south.Name, south);
-            south.NeighborBoundaries.Add(Location.Name, north);
+            south.NeighborBoundaries.Add(Location.Name, Location);
             Location.NeighborBoundaries.Add(east.Name, east);
-            east.NeighborBoundaries.Add(Location.Name, north);
+            east.NeighborBoundaries.Add(Location.Name, Location);
             Location.NeighborBoundaries.Add(west.Name, west);
             west.NeighborBoundaries.Add(Location.Name, Location);
 
             Player.Inventory.Add(flashlight);
             Player.Inventory.Add(compass);
-            Player.Inventory.Add(sandwich);
         }
 
         public void TakeItem(string itemName)
@@ -259,6 +276,34 @@ you need, return to the main cavern to start your accent!!  WARNING...there may 
 
         }
 
+        public void UseItem(string itemName)
+        {
+            IItem item = Location.Items.Find(i => i.Name.ToLower() == itemName);
+            if (item is null)
+            {
+                Console.WriteLine("You typed in an invalid item");
+                Console.Write("Press enter to continue");
+                Console.ReadLine();
+            }
+            else if (itemName != "rope")
+            {
+                Player.Inventory.Remove(item);
+                Console.WriteLine($"You removed {itemName} from your backpack\n");
+                Console.Write("Press enter to continue\n");
+                Console.ReadLine();
+            }
+            else
+            {
+                Player.Inventory.Remove(item);
+                Console.WriteLine($"You removed {itemName} from your backpack\n");
+                Console.WriteLine("Throw it to your friends to pull you to safety!!\n");
+                Console.Write("Press enter to continue\n");
+                Console.ReadLine();
+                Console.WriteLine("Congratulations!  You Won!!");
+                Playing = false;
+            }
+
+        }
         public App(bool playing = true)
         {
             Playing = playing;
