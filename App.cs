@@ -81,10 +81,16 @@ namespace Models.TreasureHunter
                             Console.WriteLine("Goodby!!");
                             Playing = false;
                         }
-                        else
+                        else if (quitResponse == "n")
                         {
                             Console.Clear();
                             DisplayMenu();
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.Write("Please select (Y)es or (N)o.");
+                            Console.ReadLine();
                         }
                         break;
 
@@ -106,7 +112,7 @@ namespace Models.TreasureHunter
                 DisplayRoomDescription();
                 if (Location.Name == "South")
                 {
-                    Console.WriteLine(@"You shimmy your way on your stomach through a tight tunnel into a cave.  When you go to stand up
+                    Console.WriteLine(@"You shimmy your way on your stomach through a tight tunnel into th south cave.  When you go to stand up
 you bash your head on a low rock ceiling.  You stumble around in a daze and take a wrong step into a deep crevasse...aaaahhhhh");
                     Console.WriteLine("\n\nSorry your gone!!!");
                     Playing = false;
@@ -137,6 +143,7 @@ For example, TAKE ROPE would add the rope to your backpack.");
 When you want to see what's in your backpack simply type PEEK.
 IMPORTANT NOTE - This is a good thing to check from time to time as you may find some helpful items.");
             Console.WriteLine("\nIf you wish to quit the game simply type QUIT at any time.\n");
+            Console.WriteLine("To display the Main Menu simply type MENU at any time.\n");
             Console.Write("Press enter to continue");
             Console.ReadLine();
 
@@ -144,14 +151,15 @@ IMPORTANT NOTE - This is a good thing to check from time to time as you may find
 
         public void DisplayMenu()
         {
+            Console.Clear();
             Console.WriteLine("GAME MENU\n\n");
-            Console.WriteLine("GO + Location -> moves you to a new location (e.g GO WEST)\n");
-            Console.WriteLine("TAKE + Item -> picks up an item and adds it to your backpack (e.g. TAKE Rope)\n");
-            Console.WriteLine("USE + Item -> takes an item from your backpack (e.g. Use Rope\n");
-            Console.WriteLine("LOOK -> shows the description of the current cave that you're in\n");
-            Console.WriteLine("PEEK -> shows the contents of your backpack\n");
-            Console.WriteLine("HELP -> displays help information.  Type this command at anytime for assistance\n");
-            Console.WriteLine("QUIT -> Ends the game.  Type this command at anytime to leave\n");
+            Console.WriteLine("GO + Location -> moves you to a new location (e.g GO WEST).\n");
+            Console.WriteLine("TAKE + Item -> picks up an item and adds it to your backpack (e.g. TAKE Rope).\n");
+            Console.WriteLine("USE + Item -> takes an item from your backpack (e.g. USE Rope).\n");
+            Console.WriteLine("LOOK -> shows the description of the current cave that you're in.\n");
+            Console.WriteLine("PEEK -> shows the contents of your backpack.\n");
+            Console.WriteLine("HELP -> displays help information.  Type this command at anytime for assistance.\n");
+            Console.WriteLine("QUIT -> Ends the game.  Type this command at anytime to leave.\n");
             Console.Write("Press enter to continue");
             Console.ReadLine();
             Console.Clear();
@@ -183,19 +191,20 @@ IMPORTANT NOTE - This is a good thing to check from time to time as you may find
         {
             Console.Clear();
             Console.WriteLine("Escape from Kuna Caves\n");
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             Console.WriteLine(@"It's late on a Saturday night. You and several of your friends get a wild hair and decide to explore the Kuna Caves.
 You head out first down the steep ladder into the main crevasse.  About half way down the ladder breaks and you tumble to the ground.
 Fortunately you're not seriously hurt, however the ladder is now useless and you need to find a way to escape!  Your objective is to explore the
 various caverns throughout the caves, and find whatever you can to help you climb to safety.  Once you've successfully found the items
 you need, return to the main cavern to start your accent!!  WARNING...there may be pitfalls along the way!!");
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             Console.WriteLine(" ");
             Console.WriteLine("Adventure awaits!  Do you want to go for it?\n");
-            Console.Write("Press Y(es) to play or N(o) to leave.");
+            Console.Write("Press (N)o to leave or enter to continue.");
             string playResponse = Console.ReadLine().ToLower();
             if (playResponse == "n")
             {
+
                 Console.Clear();
                 Console.WriteLine("Goodby!!");
                 Playing = false;
@@ -211,16 +220,16 @@ you need, return to the main cavern to start your accent!!  WARNING...there may 
         public void Run()
         {
             Greeting();
-            DisplayRoomDescription();
+            //DisplayRoomDescription();
             CaptureUserInput();
         }
 
         public void Setup()
         {
-            Boundary north = new Boundary("North", "\nYou enter a large cave with hundreads of stalactites hanging from the ceiling.  Watch your head as you roam around this cave, and be careful not to step in anything!!");
+            Boundary north = new Boundary("North", "\nThe north cave is filled with hundreads of stalactites hanging from the ceiling.  Watch your head as you roam around this cave, and be careful not to step in anything!!");
             Boundary south = new Boundary("South", " ");
-            Boundary east = new Boundary("East", "\nThis cave is full of stalagmites.  Probably not the safest place to be.  You don't want to fall on any of those...they look awfully sharp!  Get out of this cave while you can!");
-            Boundary west = new Boundary("West", "\nWatch your head!  This cave has a low ceiling and is being supported by old dried out timbers on the side of the cave.  However, they look to be pretty secure from the ROPE that's holding them together.");
+            Boundary east = new Boundary("East", "\nThe east cave is full of stalagmites.  Probably not the safest place to be.  You don't want to fall on any of those...they look awfully sharp!  Get out of this cave while you can!");
+            Boundary west = new Boundary("West", "\nWatch your head!  The west cave has a low ceiling and is being supported by old dried out timbers on the side of the cave.  However, they look to be pretty secure from the ROPE that's holding them together.");
 
             //Item hook = new Item("hook", "Hook for climbing");
             Item rope = new Item("rope", "Rope for climbing");
@@ -299,6 +308,7 @@ you need, return to the main cavern to start your accent!!  WARNING...there may 
                 Console.WriteLine("Throw it to your friends to pull you to safety!!\n");
                 Console.Write("Press enter to continue\n");
                 Console.ReadLine();
+                Console.Clear();
                 Console.WriteLine("Congratulations!  You Won!!");
                 Playing = false;
             }
