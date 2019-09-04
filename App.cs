@@ -220,7 +220,6 @@ you need, return to the main cavern to start your accent!!  WARNING...there may 
         public void Run()
         {
             Greeting();
-            //DisplayRoomDescription();
             CaptureUserInput();
         }
 
@@ -231,18 +230,17 @@ you need, return to the main cavern to start your accent!!  WARNING...there may 
             Boundary east = new Boundary("East", "\nThe east cave is full of stalagmites.  Probably not the safest place to be.  You don't want to fall on any of those...they look awfully sharp!  Get out of this cave while you can!");
             Boundary west = new Boundary("West", "\nWatch your head!  The west cave has a low ceiling and is being supported by old dried out timbers on the side of the cave.  However, they look to be pretty secure from the ROPE that's holding them together.");
 
-            //Item hook = new Item("hook", "Hook for climbing");
             Item rope = new Item("rope", "Rope for climbing");
             Item flashlight = new Item("flashlight", "Used for light");
             Item compass = new Item("compass", "Used for direction");
-            //Item sandwich = new Item("sandwich", "For nourishment");
+
 
 
             west.Items.Add(rope);
             west.Items.Add(flashlight);
             west.Items.Add(compass);
 
-            Location.Items.Add(rope);
+
             Location.Items.Add(flashlight);
             Location.Items.Add(compass);
 
@@ -277,6 +275,7 @@ you need, return to the main cavern to start your accent!!  WARNING...there may 
             }
             else
             {
+                Location.Items.Remove(item);
                 Player.Inventory.Add(item);
                 Console.WriteLine($"You added a {itemName} to your backpack");
                 Console.Write("Press enter to continue");
@@ -287,30 +286,28 @@ you need, return to the main cavern to start your accent!!  WARNING...there may 
 
         public void UseItem(string itemName)
         {
-            IItem item = Location.Items.Find(i => i.Name.ToLower() == itemName);
+            IItem item = Player.Inventory.Find(i => i.Name.ToLower() == itemName);
             if (item is null)
             {
                 Console.WriteLine("You typed in an invalid item");
                 Console.Write("Press enter to continue");
                 Console.ReadLine();
             }
-            else if (itemName != "rope")
+            else if (itemName == "rope" && Location.Name == "Main")
             {
-                Player.Inventory.Remove(item);
-                Console.WriteLine($"You removed {itemName} from your backpack\n");
-                Console.Write("Press enter to continue\n");
-                Console.ReadLine();
-            }
-            else
-            {
-                Player.Inventory.Remove(item);
-                Console.WriteLine($"You removed {itemName} from your backpack\n");
                 Console.WriteLine("Throw it to your friends to pull you to safety!!\n");
                 Console.Write("Press enter to continue\n");
                 Console.ReadLine();
                 Console.Clear();
                 Console.WriteLine("Congratulations!  You Won!!");
                 Playing = false;
+            }
+            else
+            {
+                Player.Inventory.Remove(item);
+                Console.WriteLine($"You removed {itemName} from your backpack\n");
+                Console.Write("Press enter to continue\n");
+                Console.ReadLine();
             }
 
         }
